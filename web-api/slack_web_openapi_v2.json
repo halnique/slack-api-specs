@@ -108,6 +108,61 @@
             "title": "User ID",
             "type": "string"
         },
+        "objs_bot": {
+            "additionalProperties": true,
+            "properties": {
+                "app_id": {
+                    "$ref": "#/definitions/defs_app_id"
+                },
+                "deleted": {
+                    "type": "boolean"
+                },
+                "icons": {
+                    "additionalProperties": true,
+                    "properties": {
+                        "image_36": {
+                            "format": "uri",
+                            "type": "string"
+                        },
+                        "image_48": {
+                            "format": "uri",
+                            "type": "string"
+                        },
+                        "image_72": {
+                            "format": "uri",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "image_36",
+                        "image_48",
+                        "image_72"
+                    ],
+                    "type": "object"
+                },
+                "id": {
+                    "$ref": "#/definitions/defs_bot_id"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updated": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "$ref": "#/definitions/defs_user_id"
+                }
+            },
+            "required": [
+                "id",
+                "deleted",
+                "name",
+                "updated",
+                "app_id",
+                "icons"
+            ],
+            "type": "object"
+        },
         "objs_channel": {
             "additionalProperties": true,
             "properties": {
@@ -1107,10 +1162,14 @@
             "type": "object"
         },
         "objs_file_object_with_id_only": {
-            "$ref": "#/definitions/defs_file_id",
+            "properties": {
+                "id": {
+                    "$ref": "#/definitions/defs_file_id"
+                }
+            },
             "additionalProperties": true,
             "title": "file object with ID only",
-            "type": "string"
+            "type": "object"
         },
         "objs_group": {
             "additionalProperties": true,
@@ -2735,10 +2794,16 @@
                     "type": "integer"
                 },
                 "enterprise_default_channels": {
-                    "type": "array"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/defs_channel"
+                    }
                 },
                 "enterprise_mandatory_channels": {
-                    "type": "array"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/defs_channel"
+                    }
                 },
                 "enterprise_mdm_date_enabled": {
                     "type": "integer"
@@ -3918,59 +3983,7 @@
                             "description": "Schema for successful response from bots.info method",
                             "properties": {
                                 "bot": {
-                                    "additionalProperties": true,
-                                    "properties": {
-                                        "app_id": {
-                                            "$ref": "#/definitions/defs_app_id"
-                                        },
-                                        "deleted": {
-                                            "type": "boolean"
-                                        },
-                                        "icons": {
-                                            "additionalProperties": true,
-                                            "properties": {
-                                                "image_36": {
-                                                    "format": "uri",
-                                                    "type": "string"
-                                                },
-                                                "image_48": {
-                                                    "format": "uri",
-                                                    "type": "string"
-                                                },
-                                                "image_72": {
-                                                    "format": "uri",
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "required": [
-                                                "image_36",
-                                                "image_48",
-                                                "image_72"
-                                            ],
-                                            "type": "object"
-                                        },
-                                        "id": {
-                                            "$ref": "#/definitions/defs_bot_id"
-                                        },
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "updated": {
-                                            "type": "integer"
-                                        },
-                                        "user_id": {
-                                            "$ref": "#/definitions/defs_user_id"
-                                        }
-                                    },
-                                    "required": [
-                                        "id",
-                                        "deleted",
-                                        "name",
-                                        "updated",
-                                        "app_id",
-                                        "icons"
-                                    ],
-                                    "type": "object"
+                                    "$ref": "#/definitions/objs_bot"
                                 },
                                 "ok": {
                                     "$ref": "#/definitions/defs_ok_true"
@@ -15940,7 +15953,7 @@
                                                     "type": "object"
                                                 }
                                             ],
-                                            "type": "array",
+                                            "type": "object",
                                             "uniqueItems": true
                                         },
                                         "ok": {
@@ -17658,7 +17671,10 @@
                             "description": "Schema for successful response from rtm.start method",
                             "properties": {
                                 "bots": {
-                                    "type": "array"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/objs_bot"
+                                    }
                                 },
                                 "cache_ts": {
                                     "type": "integer"
@@ -17728,13 +17744,19 @@
                                     "uniqueItems": true
                                 },
                                 "non_threadable_channels": {
-                                    "type": "array"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/objs_channel"
+                                    }
                                 },
                                 "ok": {
                                     "$ref": "#/definitions/defs_ok_true"
                                 },
                                 "read_only_channels": {
-                                    "type": "array"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/objs_channel"
+                                    }
                                 },
                                 "self": {
                                     "additionalProperties": true,
@@ -17767,10 +17789,16 @@
                                     "additionalProperties": true,
                                     "properties": {
                                         "all": {
-                                            "type": "array"
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/objs_team"
+                                            }
                                         },
                                         "self": {
-                                            "type": "array"
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/objs_team"
+                                            }
                                         }
                                     },
                                     "required": [
@@ -17783,7 +17811,10 @@
                                     "$ref": "#/definitions/objs_team"
                                 },
                                 "thread_only_channels": {
-                                    "type": "array"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/objs_channel"
+                                    }
                                 },
                                 "url": {
                                     "format": "uri",
